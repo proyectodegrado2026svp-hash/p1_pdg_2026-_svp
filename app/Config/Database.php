@@ -30,7 +30,7 @@ class Database extends Config
         'username'     => 'postgres',
         'password'     => 'svp_Proyectodegrado',
         'database'     => 'postgres',
-        'DBDriver'     => 'Postgre',
+        'DBDriver'     => 'postgre', // Modificado a minúsculas
         'DBPrefix'     => '',
         'pConnect'     => false,
         'DBDebug'      => true,
@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 6543,
+        'port'         => 6543,      // Forzado a 6543 por defecto
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
@@ -57,27 +57,27 @@ class Database extends Config
      * @var array<string, mixed>
      */
     public array $tests = [
-        'DSN'         => '',
-        'hostname'    => '127.0.0.1',
-        'username'    => '',
-        'password'    => '',
-        'database'    => ':memory:',
-        'DBDriver'    => 'SQLite3',
-        'dbprefix'    => 'db_',
-        'pConnect'    => false,
-        'DBDebug'     => true,
-        'charset'     => 'utf8',
-        'DBCollat'    => '',
-        'swapPre'     => '',
-        'encrypt'     => false,
-        'compress'    => false,
-        'strictOn'    => true,
-        'failover'    => [],
-        'port'        => 3306,
+        'DSN'          => '',
+        'hostname'     => '127.0.0.1',
+        'username'     => '',
+        'password'     => '',
+        'database'     => ':memory:',
+        'DBDriver'     => 'SQLite3',
+        'dbprefix'     => 'db_',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8',
+        'DBCollat'     => '',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => true,
+        'failover'     => [],
+        'port'         => 3306,
         'foreignKeys' => true,
         'busyTimeout' => 1000,
         'synchronous' => null,
-        'dateFormat'  => [
+        'dateFormat'   => [
             'date'     => 'Y-m-d',
             'datetime' => 'Y-m-d H:i:s',
             'time'     => 'H:i:s',
@@ -92,14 +92,14 @@ class Database extends Config
             $this->defaultGroup = 'tests';
         }
 
-        // AQUÍ ES DONDE SÍ SE PERMITE LEER EL ARCHIVO .ENV EN PHP
+        // CORREGIDO PARA VERCEL: Ahora lee tanto el formato clásico como el formato con doble guion bajo (__).
         if ($this->defaultGroup === 'default') {
-            $this->default['hostname'] = env('database.default.hostname', $this->default['hostname']);
-            $this->default['username'] = env('database.default.username', $this->default['username']);
-            $this->default['password'] = env('database.default.password', $this->default['password']);
-            $this->default['database'] = env('database.default.database', $this->default['database']);
-            $this->default['DBDriver'] = env('database.default.DBDriver', $this->default['DBDriver']);
-            $this->default['port']     = env('database.default.port', $this->default['port']);
+            $this->default['hostname'] = env('database__default__hostname', env('database.default.hostname', $this->default['hostname']));
+            $this->default['username'] = env('database__default__username', env('database.default.username', $this->default['username']));
+            $this->default['password'] = env('database__default__password', env('database.default.password', $this->default['password']));
+            $this->default['database'] = env('database__default__database', env('database.default.database', $this->default['database']));
+            $this->default['DBDriver'] = env('database__default__DBDriver', env('database.default.DBDriver', $this->default['DBDriver']));
+            $this->default['port']     = env('database__default__port', env('database.default.port', $this->default['port']));
         }
     }
 }
