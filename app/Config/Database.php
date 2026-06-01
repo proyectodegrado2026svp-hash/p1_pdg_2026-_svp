@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 5432,
+        'port'         => 6543,
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
